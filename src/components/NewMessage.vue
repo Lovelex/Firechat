@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import db from '@/firebase/init.js'
+import db from "@/firebase/init.js";
 
 export default {
   name: "NewMessage",
@@ -27,19 +27,21 @@ export default {
 
   methods: {
     addMessage() {
-      if(!this.newMessage) {
-        this.feedback = 'Message cannot be empty!'
-        return
+      if (!this.newMessage) {
+        this.feedback = "Message cannot be empty!";
+        return;
       }
-      this.feedback = ''
-      this.newMessage = ''
-      db.collection('messages').add({
-        content: this.newMessage,
-        name: this.name,
-        timeStamp: Date.now()
-      }).catch(err => {
-        console.log(err)
-      })
+      db.collection("messages")
+        .add({
+          content: this.newMessage,
+          name: this.name,
+          timeStamp: Date.now()
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      this.feedback = "";
+      this.newMessage = "";
     }
   }
 };
