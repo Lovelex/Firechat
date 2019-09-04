@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
+// Components
+import Welcome from './components/Welcome.vue'
+import Chat from './components/Chat.vue'
 
 Vue.use(Router)
 
@@ -9,17 +12,18 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      name: 'Welcome',
       path: '/',
-      name: 'home',
-      component: Home
+      component: Welcome
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      name: 'Chat',
+      path: '/chat',
+      props: true,
+      component: Chat,
+      beforeEnter(to, from, next) {
+        to.params.name ? next() : next({ name: 'Welcome' })
+      } 
     }
   ]
 })
